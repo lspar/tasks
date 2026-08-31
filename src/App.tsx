@@ -1,6 +1,7 @@
 import React from "react";
 import "./App.css";
 import { Button } from "react-bootstrap";
+import funnyDog from "./funny dog.jpg";
 
 function App(): React.JSX.Element {
     return (
@@ -28,7 +29,7 @@ function App(): React.JSX.Element {
                 </Button>
             </div>
             <img
-                src="/funnydog.jpg"
+                src={funnyDog}
                 alt="A picture of a dachshund with an orange peel on its head."
             />
         </div>
