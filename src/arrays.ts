@@ -5,7 +5,14 @@
  * the number twice.
  */
 export function bookEndList(numbers: number[]): number[] {
-    return numbers;
+    if (numbers.length === 0) {
+        return [];
+    }
+    if (numbers.length === 1) {
+        return [numbers[0], numbers[0]];
+    }
+    const firstLast = [numbers[0], numbers[numbers.length - 1]];
+    return firstLast;
 }
 
 /**
@@ -13,7 +20,8 @@ export function bookEndList(numbers: number[]): number[] {
  * number has been tripled (multiplied by 3).
  */
 export function tripleNumbers(numbers: number[]): number[] {
-    return numbers;
+    const tripled = numbers.map((number: number): number => number * 3);
+    return tripled;
 }
 
 /**
@@ -21,7 +29,10 @@ export function tripleNumbers(numbers: number[]): number[] {
  * the number cannot be parsed as an integer, convert it to 0 instead.
  */
 export function stringsToIntegers(numbers: string[]): number[] {
-    return [];
+    const toNum = numbers.map((num: string): number =>
+        Number.isNaN(parseInt(num)) ? 0 : parseInt(num),
+    );
+    return toNum;
 }
 
 /**
@@ -32,7 +43,13 @@ export function stringsToIntegers(numbers: string[]): number[] {
  */
 // Remember, you can write functions as lambdas too! They work exactly the same.
 export const removeDollars = (amounts: string[]): number[] => {
-    return [];
+    const noDollar = amounts.map((amount: string): string =>
+        amount[0] === "$" ? amount.slice(1) : amount,
+    );
+    const toNum = noDollar.map((num: string): number =>
+        Number.isNaN(parseInt(num)) ? 0 : parseInt(num),
+    );
+    return toNum;
 };
 
 /**
@@ -41,7 +58,13 @@ export const removeDollars = (amounts: string[]): number[] => {
  * in question marks ("?").
  */
 export const shoutIfExclaiming = (messages: string[]): string[] => {
-    return [];
+    const exclaim = messages.map((message: string): string =>
+        message[message.length - 1] === "!" ? message.toUpperCase() : message,
+    );
+    const question = exclaim.filter(
+        (message: string): boolean => message[message.length - 1] !== "?",
+    );
+    return question;
 };
 
 /**
@@ -49,7 +72,8 @@ export const shoutIfExclaiming = (messages: string[]): string[] => {
  * 4 letters long.
  */
 export function countShortWords(words: string[]): number {
-    return 0;
+    const less = words.filter((word: string): boolean => word.length < 4);
+    return less.length;
 }
 
 /**
@@ -58,7 +82,16 @@ export function countShortWords(words: string[]): number {
  * then return true.
  */
 export function allRGB(colors: string[]): boolean {
-    return false;
+    if (colors.length === 0) {
+        return true;
+    }
+    const rgb = colors.every((color: string): boolean =>
+        color === "red" ? true
+        : color === "blue" ? true
+        : color === "green" ? true
+        : false,
+    );
+    return rgb;
 }
 
 /**
@@ -69,7 +102,16 @@ export function allRGB(colors: string[]): boolean {
  * And the array [] would become "0=0".
  */
 export function makeMath(addends: number[]): string {
-    return "";
+    if (addends.length === 0) {
+        return "0=0";
+    }
+    const add = addends.reduce(
+        (sum: number, addend: number): number => sum + addend,
+        0,
+    );
+    const string = addends.join("+");
+    const answer = add.toString() + "=" + string;
+    return answer;
 }
 
 /**
@@ -82,5 +124,24 @@ export function makeMath(addends: number[]): string {
  * And the array [1, 9, 7] would become [1, 9, 7, 17]
  */
 export function injectPositive(values: number[]): number[] {
-    return [];
+    const answer = [...values];
+    const addAll = answer.reduce(
+        (sum: number, value: number): number => sum + value,
+        0,
+    );
+    const index = answer.findIndex((value: number): boolean => value < 0);
+    if (index === -1) {
+        answer.splice(answer.length, 0, addAll);
+        return answer;
+    }
+    const befores = answer.slice(0, index);
+    const add = befores.reduce(
+        (sum: number, before: number): number => sum + before,
+        0,
+    );
+    answer.splice(index + 1, 0, add);
+
+    return answer;
 }
+console.log(injectPositive([1, 9, -5, 7]));
+console.log(injectPositive([1, 2, 3]));
